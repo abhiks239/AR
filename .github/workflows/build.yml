@@ -29,4 +29,4 @@ jobs:
       with:
         name: AR-Calculation-Tool-Desktop
         path: dist/*.exe
-        if-no-files-found: errorv
+        if-no-files-found: error
