@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; padding: 18px; background: #fff; color: #18233a; }
+  #msg { white-space: pre-line; font-size: 13.5px; margin-bottom: 12px; line-height: 1.5; }
+  input { width: 100%; box-sizing: border-box; padding: 9px 11px; border: 1px solid #e1e5ec; border-radius: 8px; font-size: 14px; }
+  input:focus { outline: none; border-color: #0a1e3d; }
+  .row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+  button { padding: 8px 18px; border-radius: 8px; border: 1px solid #e1e5ec; background: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
+  button.ok { background: #0a1e3d; color: #fff; border-color: #0a1e3d; }
+</style>
+</head>
+<body>
+  <div id="msg"></div>
+  <input id="val" autofocus>
+  <div class="row">
+    <button id="cancel">Cancel</button>
+    <button class="ok" id="ok">OK</button>
+  </div>
+<script>
+  const { ipcRenderer } = require('electron');
+  const input = document.getElementById('val');
+  ipcRenderer.on('prompt-init', (e, message, def) => {
+    document.getElementById('msg').textContent = message;
+    input.value = def || '';
+    input.focus();
+    input.select();
+  });
+  const submit = v => ipcRenderer.send('app-prompt-result', v);
+  document.getElementById('ok').onclick = () => submit(input.value);
+  document.getElementById('cancel').onclick = () => submit(null);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') submit(input.value);
+    if (e.key === 'Escape') submit(null);
+  });
+</script>
+</body>
+</html>
