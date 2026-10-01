@@ -1,1 +1,21 @@
-
+{
+  "name": "ar-calculation-tool",
+  "version": "1.0.0",
+  "description": "AR Calculation Tool - BEPL & BSCIPL",
+  "main": "main.js",
+  "author": "Abhishek",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.abhishek.arcalc",
+    "productName": "AR Calculation Tool",
+    "files": ["main.js", "preload.js", "prompt.html", "index.html"],
+    "win": { "target": "portable" }
+  }
+}
